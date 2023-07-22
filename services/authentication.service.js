@@ -2,13 +2,16 @@ import UserModel from "../models/user.model.js"
 import hash from "../utils/hash.js"
 import randomCode from "../utils/randomCode.js"
 import ResponseFormat from "../utils/response.js"
-import { isPhone } from "../utils/validator.js"
+import { isPhone} from "../utils/validator.js"
+import deleteSpace from "../utils/deleteSpace.js"
 
 class AuthenticationService {
 
     static signupClassic = async (fullname, password, phoneNumber) => {
         if (isPhone(phoneNumber)) {
-            password = hash(password)
+            password = hash(deleteSpace(password))
+            fullname=deleteSpace(fullname)
+
             const phoneCode = randomCode()
             const existTest = await UserModel.findOne({ phoneNumber })
 

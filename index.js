@@ -12,7 +12,6 @@ app.use(bodyParser.json())
 app.use(cors({ origin: "*" }))
 app.use(bodyParser.urlencoded({ extended: true }))
 
-
 //routes
 import authentication from './routes/authentication.routes.js'
 app.use('/authentication', authentication)
