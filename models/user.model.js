@@ -28,7 +28,7 @@ const UserSchema = new Schema({
     phoneNumber: {
         type: String,
         require: false,
-        unique:true
+        unique: true
     },
     phoneCode: {
         type: String,
@@ -42,5 +42,4 @@ const UserSchema = new Schema({
 })
 
 const UserModel = new model('Users', UserSchema)
-
 export default UserModel

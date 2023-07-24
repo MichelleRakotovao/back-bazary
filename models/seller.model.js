@@ -15,4 +15,5 @@ const SellerSchema = new Schema({
     }],
 })
 
-export default SellerModel = new model('Sellers', SellerSchema)
+const SellerModel = new model('Sellers', SellerSchema)
+export default SellerModel
