@@ -2,7 +2,6 @@ import AuthenticationService from "../services/authentication.service.js"
 import ResponseFormat from "../utils/response.js"
 import deleteSpace from "../utils/deleteSpace.js"
 import deleteSpacePhone from "../utils/deleteSpacePhone.js"
-import hash from "../utils/hash.js"
 
 class AuthenticationController {
     static signupClassic = async (req, res) => {

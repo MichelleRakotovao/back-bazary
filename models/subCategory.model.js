@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose"
-const subCategorySchema = new Schema({
+const subCategorySchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
@@ -10,5 +10,5 @@ const subCategorySchema = new Schema({
         required: true
     }
 })
-const SubCategoryModel = model('SubCategories', subCategorySchema)
+SubCategoryModel = new model('SubCategories', subCategorySchema)
 export default SubCategoryModel

@@ -1,52 +1,52 @@
-import { underClasses } from "../models/underclassModels.js"
-const addUnderClass= async (req,res)=>{
+import { SubCategoryModel } from "../models/subCategory.model.js"
+const addSubCategory= async (req,res)=>{
     try{
-        const {nameUnderClass,Class}= req.body
-        if(nameUnderClass && Class){
-            const newUnderClass = new underClasses({nameUnderClass,Class})
-            await newUnderClass.save()
-            res.send(newUnderClass)
+        const {name,category}= req.body
+        if(name && category){
+            const newSubCategory = new SubCategoryModel({name,category})
+            await newSubCategory.save()
+            res.send(newSubCategory)
         }else{res.status(401).send('Completez les données')}
     }catch(error){res.status(500).json({error:error.message})}
 }
 
-const displayUnderClass = async(req,res)=>{
+const displaySubCategory = async(req,res)=>{
     try{
-        const allunderClasses = await underClasses.find()
-        res.send(allunderClasses)
+        const allSubCategories = await SubCategoryModel.find()
+        res.send(allSubCategories)
     }catch(error){res.status(500).json({error: error.message})}
 }
 
-const displayUnderClassOne = async(req,res)=>{
+const displayOneSubCategory = async(req,res)=>{
     const {id} = req.query
-    res.send(await underClasses.findById(id))
+    res.send(await SubCategoryModel.findById(id))
 }
 
-const editUnderClass = async(req,res)=>{
+const editSubCategory = async(req,res)=>{
     try{
         const {id} = req.params;
-        const data = await underClasses.findById(id)
+        const data = await SubCategoryModel.findById(id)
         if(!data){
             res.status(404).send('Sous categorie non trouvé')}
         else{
-            data.nameUnderClass = req.body.nameUnderClass
+            data.name= req.body.name
             await data.save()
             res.send(data)
         }
     }catch(error){res.status(500).json({error:error.message})}
 }
 
-const deleteUnderClass=async(req,res)=>{
+const deleteSubCategory=async(req,res)=>{
     try{
         const {id} = req.query
-        const data = await underClasses.findByIdAndDelete({_id: id})
+        const data = await SubCategoryModel.findByIdAndDelete({_id: id})
         if(!data){
-            return res.status(404).send('Sous catégories non retrouver')
+            return res.status(404).send('Sous catégories non retrouvé')
         }
         console.log("sous ategorie supprimé : ",data)
-        res.send(data.nameUnderClass+ 'est supprimé')
+        res.send(data.name+ 'est supprimé')
     }catch(error){console.error('Erreur lors da la suppression du sous catégorie : ',error)}
     res.status(500).json({error:error.message})   
 }
 
-export default {addUnderClass,displayUnderClass,displayUnderClassOne,editUnderClass,deleteUnderClass}
+export default {addSubCategory,displaySubCategory,editSubCategory,deleteSubCategory,displayOneSubCategory}

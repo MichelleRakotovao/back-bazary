@@ -1,9 +1,9 @@
-import { items } from "../models/itemsModel.js"
+import { items } from "../models/item.model.js"
 const addItem = async(req,res)=>{
     try{
-        const {nameItem, priceItem,numberItem,UnderClass} = req.body
-        if(nameItem && priceItem && numberItem && UnderClass){
-            const newItem = new items({nameItem,priceItem,numberItem,UnderClass})
+        const {name, price,count,subCategory} = req.body
+        if(name&& price&& count && subCategory){
+            const newItem = new items({name,price,count,subCategory})
             await newItem.save()
             res.send(newItem)
         }else res.status(401).send('Veuillez envoyer les données nécessaire')
@@ -29,10 +29,10 @@ const editItem = async(req,res)=>{
         if(!data){
             res.status(404).send('Article non trouvé')
         }else {
-            data.nameItem = req.body.nameItem
-            data.numberItem = req.body.numberItem
-            data.priceItem = req.body.priceItem
-            data.UnderClass = req.body.UnderClass
+            data.name= req.body.name
+            data.count = req.body.count
+            data.price = req.body.price
+            data.subCategory = req.body.subCategory
             await data.save()
             res.send(data)
         }
@@ -47,8 +47,8 @@ const deleteItem = async(req,res)=>{
             return res.status(404).send("Cette categorie est introubable")
         }
         console.log("Article supprimé: ",data)
-        res.send(data.nameItem+" est supprimé")
-    } catch(error){console.error('erreur lors de la suppréssion', error)}
+        res.send(data.name+" est supprimé")
+    }catch(error){console.error('erreur lors de la suppréssion', error)}
     res.status(500).json({error:error.message})
 }
 module.exports = {addItem,displayItem,displayItemOne,editItem,deleteItem}
