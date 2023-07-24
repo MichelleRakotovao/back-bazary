@@ -1,5 +1,4 @@
-const {items} = require("../models/itemsModel")
-
+import { items } from "../models/itemsModel.js"
 const addItem = async(req,res)=>{
     try{
         const {nameItem, priceItem,numberItem,UnderClass} = req.body

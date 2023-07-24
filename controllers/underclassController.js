@@ -1,5 +1,4 @@
-const {underClasses} = require("../models/underclassModels")
-
+import { underClasses } from "../models/underclassModels.js"
 const addUnderClass= async (req,res)=>{
     try{
         const {nameUnderClass,Class}= req.body
@@ -50,6 +49,4 @@ const deleteUnderClass=async(req,res)=>{
     res.status(500).json({error:error.message})   
 }
 
-
-
-module.exports ={addUnderClass,displayUnderClass,displayUnderClassOne,editUnderClass,deleteUnderClass}
+export default {addUnderClass,displayUnderClass,displayUnderClassOne,editUnderClass,deleteUnderClass}

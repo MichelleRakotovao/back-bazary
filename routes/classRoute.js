@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const {addClass,displayClass,displayClassOne,editClass,deleteClass}=require("../controllers/classController")
+import { addClass,displayClass,displayClassOne,editClass,deleteClass } from '../controllers/classController.js'
 router.post('/',addClass)
 router.get('/',displayClass)
 router.get('/one',displayClassOne)

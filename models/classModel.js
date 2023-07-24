@@ -1,4 +1,3 @@
-const {model} = require("mongoose")
 const classes = new model(
     "bazary",{
             nameClass:{
@@ -11,4 +10,4 @@ const classes = new model(
             }   
     },"classes"
 )
-module.exports = {classes}
+export default classes

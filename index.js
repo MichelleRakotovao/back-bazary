@@ -19,9 +19,9 @@ app.use('/authentication', authentication)
 // version clone 1
 
 app.use(bodyParser.json())
-const {addClass, displayClass,displayClassOne,editClass,deleteClass}= require("./controllers/classController")
-const {addUnderClass,displayUnderClass,displayUnderClassOne,editUnderClass,deleteUnderClass}=require("./controllers/underclassController")
-const {addItem,displayItem,displayItemOne,editItem, deleteItem} = require("./controllers/itemsController")
+import { addClass,displayClass,displayClassOne,editClass,deleteClass} from './controllers/classController.js'
+import { addUnderClass,displayUnderClass,displayUnderClassOne,editUnderClass,deleteUnderClass } from './controllers/underclassController.js'
+import { addItem,displayItem,displayItemOne,editItem,deleteItem } from './controllers/itemsController.js'
 
 app.post("/",(req,res)=>addClass(req,res))
 app.get("/allClass",(req,res)=>displayClass(req,res))

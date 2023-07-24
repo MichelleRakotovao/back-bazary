@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+import mongoose from "mongoose"
 const underClassesSchema = new mongoose.Schema({
     nameUnderClass: {
         type: String,
@@ -11,4 +11,4 @@ const underClassesSchema = new mongoose.Schema({
     }
 })
 const underClasses = mongoose.model('underClasses', underClassesSchema)
-module.exports = { underClasses }
+export default underClasses

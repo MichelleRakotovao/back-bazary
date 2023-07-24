@@ -1,5 +1,4 @@
-const { classes } = require("../models/classModel");
-
+import { } from "../models/classModel.js"
 const addClass = async (req, res) => {
     try {
         const { nameClass, numberClass } = req.body
