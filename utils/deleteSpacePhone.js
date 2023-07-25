@@ -1,3 +1,3 @@
-export default(phoneNumber)=>{
-    return phoneNumber.replace(/\s/g, '');
+export default (phoneNumber) => {
+    return phoneNumber.replace(/\s/g, '')
 }
