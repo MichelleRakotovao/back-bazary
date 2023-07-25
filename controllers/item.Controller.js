@@ -1,54 +1,79 @@
-import { items } from "../models/itemsModel.js"
-const addItem = async(req,res)=>{
-    try{
-        const {nameItem, priceItem,numberItem,UnderClass} = req.body
-        if(nameItem && priceItem && numberItem && UnderClass){
-            const newItem = new items({nameItem,priceItem,numberItem,UnderClass})
-            await newItem.save()
-            res.send(newItem)
-        }else res.status(401).send('Veuillez envoyer les données nécessaire')
-    }catch(error){ res.status(500).json({ error }) }
-}
+import ResponseFormat from "../utils/response.js"
+import deleteSpace from "../utils/deleteSpace.js"
+import deleteSpace from "../utils/deleteSpace.js"
+import decodeToken from "../utils/decodeToken.js"
+import ItemService from "../services/item.service.js"
 
-const displayItem= async(req,res)=>{
-    try {
-        const allItems = await items.find()
-        res.send(allItems)
-    } catch (error) {res.status(500).json({ error: error.message })}
-} 
+export default class ItemController {
 
-const displayItemOne = async(req,res)=>{
-    const {id} = req.query
-    res.send(await items.findById(id))
-}
+    static add = async (req, res) => {
+        let { name, price, picturesUrls, count, category, subCategory, Number, color } = req.body
+        const { authorization } = req.headers
 
-const editItem = async(req,res)=>{
-    try{
-        const {id} = req.query;
-        const data = await items.findById(id)
-        if(!data){
-            res.status(404).send('Article non trouvé')
-        }else {
-            data.nameItem = req.body.nameItem
-            data.numberItem = req.body.numberItem
-            data.priceItem = req.body.priceItem
-            data.UnderClass = req.body.UnderClass
-            await data.save()
-            res.send(data)
-        }
-    }catch(error){res.status(500).json({error:error.message})}
-}
+        name = deleteSpace(name)
+        category = deleteSpace(category)
+        subCategory = deleteSpace(subCategory)
+        if (name && price && picturesUrls && count && category && subCategory && Number) {
+            const itemProperty = {
+                name,
+                price,
+                picturesUrls,
+                count,
+                type: {
+                    category,
+                    subCategory
+                },
+                Number,
+                color,
+                seller: decodeToken(authorization)
+            }
+            const data = await ItemService.add(itemProperty)
+            res.status(data.code).send(data)
+        } else res.status(401).send(new ResponseFormat(401, 'FAILURE', {}, 'Veuillez verifier les champs "name, price, picturesUrls, count, category, subCategory, Number, color*" '))
+    }
 
-const deleteItem = async(req,res)=>{
-    try{
-        const {id} = req.query
-        const data = await items.findOneAndDelete({_id: id})
-        if(!data){
-            return res.status(404).send("Cette categorie est introubable")
-        }
-        console.log("Article supprimé: ",data)
-        res.send(data.nameItem+" est supprimé")
-    } catch(error){console.error('erreur lors de la suppréssion', error)}
-    res.status(500).json({error:error.message})
+    static itemDetail = async (req, res) => {
+        const data = await ItemService.itemDetail(req.params.itemId)
+        res.status(data.code).send(data)
+    }
+    static findAll = async (req, res) => {
+        const data = await ItemService.findAll()
+        res.status(data.code).send(data)
+    }
+
+    static edit = async (req, res) => {
+        let { name, price, picturesUrls, count, category, subCategory, Number, color, itemID } = req.body
+        const { authorization } = req.headers
+
+        name = deleteSpace(name)
+        category = deleteSpace(category)
+        subCategory = deleteSpace(subCategory)
+        if (name && price && picturesUrls && count && category && subCategory && Number && itemID) {
+            const itemProperty = {
+                name,
+                price,
+                picturesUrls,
+                count,
+                type: {
+                    category,
+                    subCategory
+                },
+                Number,
+                color,
+                seller: decodeToken(authorization)
+            }
+            const data = await ItemService.edit(itemProperty, itemID)
+            res.status(data.code).send(data)
+        } else res.status(401).send(new ResponseFormat(401, 'FAILURE', {}, 'Veuillez verifier les champs "name, itemID, price, picturesUrls, count, category, subCategory, Number, color*" '))
+    }
+
+    static delete = async (req, res) => {
+        let { itemID } = req.body
+        const { authorization } = req.headers
+        if (itemID) {
+            const data = await ItemService.edit(itemProperty, itemID)
+            res.status(data.code).send(data)
+        } else res.status(401).send(new ResponseFormat(401, 'FAILURE', {}, 'Veuillez verifier le champs "itemID" '))
+    }
+
 }
-module.exports = {addItem,displayItem,displayItemOne,editItem,deleteItem}

@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose"
 
-const CategorySchema = new Schema({
+const ItemSchema = new Schema({
     name: {
         type: String,
         required: true
@@ -9,14 +9,29 @@ const CategorySchema = new Schema({
         type: Number,
         required: true
     },
+    picturesUrls: [{
+        type: String
+    }],
     count: {
         type: Number,
         required: true
     },
-    subCategory: {
-        type: Schema.Types.ObjectId,
-        ref: "SubCategories"
+    type: {
+        type: {
+            category: String,
+            subCategory: String,
+        }
+    },
+    size: Number,
+    color: String,
+    orders: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Orders',
+    }],
+    seller: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Sellers',
     }
 })
-const CategoryModel = new model('Categories', CategorySchema)
-export default CategoryModel
+const ItemModel = new model('Items', ItemSchema)
+export default ItemModel

@@ -1,6 +1,10 @@
 import { model, Schema } from "mongoose"
 
 const SellerSchema = new Schema({
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Users',
+    },
     CINUrl: {
         type: string,
         require: true
@@ -8,11 +12,8 @@ const SellerSchema = new Schema({
     items: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Items',
-    }],
-    orders: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Orders',
-    }],
+    }]
+
 })
 
 const SellerModel = new model('Sellers', SellerSchema)
