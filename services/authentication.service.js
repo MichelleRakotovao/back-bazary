@@ -68,7 +68,7 @@ class AuthenticationService {
         if (user) {
             if (user.phoneNumber) {
                 if (user.phoneCode == validationCode) {
-                    user.validationCode = 000000
+                    user.validationCode = '000000'
                     isPhoneVerified = true
                     await user.save()
                     return new ResponseFormat(200, 'SUCCESS', {}, `Votre numero de téléphone est désormais vérifié`)
@@ -100,7 +100,7 @@ class AuthenticationService {
                     if (phoneCode == user.phoneCode) {
                         password = hash(password)
                         user.password = password
-                        user.phoneCode = 0000
+                        user.phoneCode = '0000'
                         await user.save()
                         const token = generateToken(user.id, user.sellerID)
                         return new ResponseFormat(200, 'SUCCESS', { token }, `Votre mot de passe a été reinitialisé`)

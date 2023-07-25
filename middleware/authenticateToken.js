@@ -1,7 +1,7 @@
 import Jwt from 'jsonwebtoken'
-import ResponseFormat from '../utils/response'
+import ResponseFormat from '../utils/response.js'
 
-export async function authenticateToken(req, res, next) {
+const authenticateToken = async (req, res, next) => {
     const SECRET = process.env.SECRET || '0000'
     const { authorization } = req.headers
     if (authorization) {
@@ -13,3 +13,5 @@ export async function authenticateToken(req, res, next) {
         } catch (error) { res.status(403).send(new ResponseFormat(403, 'FAILURE', {}, `Le token JWT que vous avez envoyé n'est plus valide, veuillez vous reconnecter`)) }
     } else res.status(403).send(new ResponseFormat(403, 'FAILURE', {}, `Vous devez vous connecter pour pouvoir utiliser cette fonctionnalité`))
 }
+
+export default authenticateToken

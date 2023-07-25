@@ -1,5 +1,6 @@
 import { Router } from "express"
 import itemControllers from "../controllers/item.controllers.js"
+import authenticateToken from '../middleware/authenticateToken.js'
 const router = Router()
 
 router.post('/add', authenticateToken, (req, res) => itemControllers.add(req, res))

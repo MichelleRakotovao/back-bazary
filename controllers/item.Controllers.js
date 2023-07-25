@@ -1,6 +1,5 @@
 import ResponseFormat from "../utils/response.js"
 import deleteSpace from "../utils/deleteSpace.js"
-import deleteSpace from "../utils/deleteSpace.js"
 import decodeToken from "../utils/decodeToken.js"
 import ItemService from "../services/item.service.js"
 

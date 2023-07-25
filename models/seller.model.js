@@ -2,15 +2,15 @@ import { model, Schema } from "mongoose"
 
 const SellerSchema = new Schema({
     user: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Users',
     },
     CINUrl: {
-        type: string,
+        type: String,
         require: true
     },
     items: [{
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Items',
     }]
 

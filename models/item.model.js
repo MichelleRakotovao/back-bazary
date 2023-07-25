@@ -25,11 +25,11 @@ const ItemSchema = new Schema({
     size: Number,
     color: String,
     orders: [{
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Orders',
     }],
     seller: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Sellers',
     }
 })
