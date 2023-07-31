@@ -1,5 +1,6 @@
 import resizeImg from 'resize-img'
 import fs from 'fs'
+import ResponseFormat from "../utils/response.js"
 
 const uploadService = async (files) => {
     try {
@@ -12,7 +13,7 @@ const uploadService = async (files) => {
                 let image = await resizeImg(fs.readFileSync(url), { width: 600 })
                 fs.writeFileSync(url, image)
             }
-            return new ResponseFormat(404, 'FAILURE', reqFiles, `Voici les noms des fichiers`)
+            return new ResponseFormat(200, 'SUCCESS', reqFiles, `Voici les noms des fichiers`)
         }
     } catch (errorMessage) { return new ResponseFormat(500, 'FAILURE', { errorMessage }, `erreur interne u serveur`) }
 }
