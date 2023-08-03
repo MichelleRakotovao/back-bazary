@@ -58,6 +58,5 @@ class AuthenticationController {
         }
         else return res.status(401).send(new ResponseFormat(401, "FAILURE", {}, ` userId, password, phoneCode requis`))
     }
-
 }
 export default AuthenticationController

@@ -22,11 +22,12 @@ app.use(bodyParser.urlencoded({ extended: true }))
 import authenticationRouter from './routes/authentication.routes.js'
 import staticFile from './routes/staticFile.routes.js'
 import itemRouter from './routes/item.routes.js'
+import categoryRouter from './routes/category.routes.js'
 
 app.use('/file/public', Express.static(path.join(__dirname, 'public')))
 app.use('/authentication', authenticationRouter)
 app.use('/item', itemRouter)
 app.use('/file', staticFile)
-
+app.use('/category',categoryRouter)
 app.listen(PORT, () => console.log(`👽 Server running on port ${PORT}`))
 
