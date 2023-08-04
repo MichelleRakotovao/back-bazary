@@ -5,7 +5,7 @@ import { isPhone } from "../utils/validator.js"
 import deleteSpace from "../utils/deleteSpace.js"
 import ResponseFormat from "../utils/response.js"
 import { generateToken } from "../utils/generateToken.js"
-import deleteSpacePhone from "../utils/deleteSpacePhone.js"
+import deleteAllSpaces from "../utils/deleteAllSpaces.js"
 
 class AuthenticationService {
 
@@ -13,7 +13,7 @@ class AuthenticationService {
         if (isPhone(phoneNumber)) {
             password = hash(password)
             fullname = deleteSpace(fullname)
-            phoneNumber = deleteSpacePhone(phoneNumber)
+            phoneNumber = deleteAllSpaces(phoneNumber)
             const phoneCode = randomCode()
             const existTest = await UserModel.findOne({ phoneNumber })
             if (!existTest) {

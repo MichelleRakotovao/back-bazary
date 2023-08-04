@@ -1,6 +1,6 @@
 import ResponseFormat from "../utils/response.js"
 import deleteSpace from "../utils/deleteSpace.js"
-import deleteSpacePhone from "../utils/deleteSpacePhone.js"
+import deleteAllSpaces from "../utils/deleteAllSpaces.js"
 import AuthenticationService from "../services/authentication.service.js"
 
 class AuthenticationController {
@@ -9,7 +9,7 @@ class AuthenticationController {
         let { fullname, password, phoneNumber } = req.body
         fullname = deleteSpace(fullname)
         password = deleteSpace(password)
-        phoneNumber = deleteSpacePhone(phoneNumber)
+        phoneNumber = deleteAllSpaces(phoneNumber)
         if (fullname && password && phoneNumber) {
             const data = await AuthenticationService.signupClassic(fullname, password, phoneNumber)
             res.status(data.code).send(data)

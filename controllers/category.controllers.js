@@ -27,4 +27,12 @@ export default class CategoryController{
         } catch (error){res.status(500).json({error:error.message})}
     } 
     }
+    async editCategory(req,res){
+        const {name}=req.query
+        if (name){
+            try {
+                
+            } catch (error){}
+        }
+    }
 }
