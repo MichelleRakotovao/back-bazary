@@ -15,5 +15,23 @@ class CategoryService{
         const category=await CategoryModel.findOne({name})
         return category
     }
-}
+    async editCategory(categoryName, newName) {
+        try {
+          const updatedCategory = await CategoryModel.findOneAndUpdate(
+            { name: categoryName },
+            { name: newName },
+            { new: true }
+          )
+    
+          if (!updatedCategory) {
+            return new ResponseFormat(404, "FAILURE", {}, `Catégorie non trouvée`)
+          }
+    
+          return new ResponseFormat(200, "SUCCESS", updatedCategory, "Catégorie mise à jour avec succès!")
+        } catch (error) {
+          return new ResponseFormat(500, "FAILURE", { error }, "Erreur lors de la mise à jour!")
+        }
+      }
+    }
+
 export default CategoryService

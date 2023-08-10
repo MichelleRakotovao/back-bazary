@@ -1,3 +1,4 @@
+import { setDriver } from 'mongoose'
 import UploadService from '../services/staticFile.service.js'
 
 const UploadController = async (req, res) => {
@@ -8,4 +9,4 @@ const UploadController = async (req, res) => {
     } else res.status(403).send(new ResponseFormat(403, 'FAILURE', {}, `Vous devez envoyer des images`))
 }
 
-export default UploadController 
+export default UploadController   
