@@ -1,5 +1,5 @@
 import hash from "../utils/hash.js"
-import UserModel from "../models/user.model.js"
+import SellerModel from "../models/seller.model.js"
 import randomCode from "../utils/randomCode.js"
 import { isPhone } from "../utils/validator.js"
 import deleteSpace from "../utils/deleteSpace.js"
@@ -15,9 +15,9 @@ class AuthenticationService {
             fullname = deleteSpace(fullname)
             phoneNumber = deleteAllSpaces(phoneNumber)
             const phoneCode = randomCode()
-            const existTest = await UserModel.findOne({ phoneNumber })
+            const existTest = await SellerModel.findOne({ phoneNumber })
             if (!existTest) {
-                const newUser = new UserModel(
+                const newSeller = new SellerModel(
                     {
                         fullname,
                         password,
@@ -28,22 +28,22 @@ class AuthenticationService {
                         },
                         phoneCode
                     })
-                await newUser.save()
-                return new ResponseFormat(200, 'SUCCESS', { token: generateToken(newUser.id, '') }, 'Votre compte a été créé')
+                await newSeller.save()
+                return new ResponseFormat(200, 'SUCCESS', { token: generateToken(newSeller.id, '') }, 'Votre compte a été créé')
             } else return new ResponseFormat(403, 'FAILURE', {}, 'Ce numéro de téléphone est déjà utilisé')
         } else return new ResponseFormat(401, 'FAILURE', {}, 'Veuillez fournir un numéro valide')
     }
 
     static signupCustom = async (fullname, uuid, authenticationProvider) => {
         fullname = deleteSpace(fullname)
-        const existTest = await UserModel.findOne({
+        const existTest = await SellerModel.findOne({
             authenticationType: {
                 providerName: authenticationProvider,
                 uuid: uuid
             }
         })
         if (!existTest) {
-            const newUser = new UserModel(
+            const newSeller = new SellerModel(
                 {
                     fullname,
                     authenticationType: {
@@ -51,20 +51,20 @@ class AuthenticationService {
                         uuid: uuid
                     },
                 })
-            await newUser.save()
-            return new ResponseFormat(200, 'SUCCESS', { token: generateToken(newUser.id, '') }, 'Votre compte a été créé')
+            await newSeller.save()
+            return new ResponseFormat(200, 'SUCCESS', { token: generateToken(newSeller.id, '') }, 'Votre compte a été créé')
         } else return new ResponseFormat(403, 'FAILURE', {}, `Ce compte ${authenticationProvider} est déjà inscript sur Bazary`)
     }
 
     static login = async (password, phoneNumber) => {
         password = hash(password)
-        let user = await UserModel.findOne({ phoneNumber, password })
-        if (user) return new ResponseFormat(200, "SUCCESS", { token: generateToken(user.id, user.sellerID) }, `Authentification réussie`)
+        let seller = await SellerModel.findOne({ phoneNumber, password })
+        if (seller) return new ResponseFormat(200, "SUCCESS", { token: generateToken(seller.id) }, `Authentification réussie`)
         else return new ResponseFormat(404, "FAILURE", {}, `Utilisateur introuvable`)
     }
 
     static validatePhoneNumber = async (userId, validationCode) => {
-        const user = await UserModel.findById(userId)
+        const user = await SellerModel.findById(userId)
         if (user) {
             if (user.phoneNumber) {
                 if (user.phoneCode == validationCode) {
@@ -78,12 +78,12 @@ class AuthenticationService {
     }
 
     static forgotPassword = async (userId) => {
-        const user = await UserModel.findById(userId)
-        if (user) {
-            if (user.phoneNumber) {
-                if (user.isPhoneVerified) {
+        const seller = await SellerModel.findById(userId)
+        if (seller) {
+            if (seller.phoneNumber) {
+                if (seller.isPhoneVerified) {
                     const confirmationCode = randomCode()
-                    user.phoneCode = confirmationCode
+                    seller.phoneCode = confirmationCode
                     await user.save()
                     // manque le code pour envoyer le sms
                     return new ResponseFormat(200, 'SUCCESS', {}, `Vous avez reçu un code de confirmation pour reinitialiser votre mot de passe`)
@@ -93,20 +93,20 @@ class AuthenticationService {
     }
 
     static resetPassword = async (userId, password, phoneCode) => {
-        const user = await UserModel.findById(userId)
-        if (user) {
-            if (user.phoneNumber) {
-                if (user.isPhoneVerified) {
-                    if (phoneCode == user.phoneCode) {
+        const seller = await SellerModel.findById(userId)
+        if (seller) {
+            if (seller.phoneNumber) {
+                if (seller.isPhoneVerified) {
+                    if (phoneCode == seller.phoneCode) {
                         password = hash(password)
-                        user.password = password
-                        user.phoneCode = '0000'
-                        await user.save()
+                        seller.password = password
+                        seller.phoneCode = '0000'
+                        await seller.save()
                         const token = generateToken(user.id, user.sellerID)
                         return new ResponseFormat(200, 'SUCCESS', { token }, `Votre mot de passe a été reinitialisé`)
                     } else return new ResponseFormat(403, 'FAILURE', {}, `Le code de confirmation ne correspond pas`)
                 } else return new ResponseFormat(403, 'FAILURE', {}, `Vous n'avez pas encore validé votre numéro téléphone. Seul les comptes ayant un numéro de téléphone vérifié peuvent utiliser cette fonctionnalité`)
-            } else return new ResponseFormat(403, 'FAILURE', {}, `Ce compte a été uniquement enregistré avec ${user.authenticationType.providerName}, donc il est impossible de récupérer son mot de passe. Seul les comptes ayant un numéro de téléphone vérifié peuvent utiliser cette fonctionnalité`)
+            } else return new ResponseFormat(403, 'FAILURE', {}, `Ce compte a été uniquement enregistré avec ${seller.authenticationType.providerName}, donc il est impossible de récupérer son mot de passe. Seul les comptes ayant un numéro de téléphone vérifié peuvent utiliser cette fonctionnalité`)
         } else return new ResponseFormat(403, 'FAILURE', {}, `Cet utilisateur n'est pas inscrit dans Bazary`)
     }
 }

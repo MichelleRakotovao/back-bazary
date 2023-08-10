@@ -1,5 +1,6 @@
 import CategoryModel from "../models/category.model.js"
 import ResponseFormat from "../utils/response.js"
+import categoryModel from "../models/category.model.js"
 class CategoryService{
     async addCategory(name){
     const newCategory=await new CategoryModel({name})
@@ -31,6 +32,13 @@ class CategoryService{
         } catch (error) {
           return new ResponseFormat(500, "FAILURE", { error }, "Erreur lors de la mise à jour!")
         }
+      }
+      async deleteCategory(categoryName){
+        try{
+          const data=await categoryModel.findOneAndDelete({name:categoryName})  
+          if(!data){return new ResponseFormat(404,"FAILURE",{categoryName},`Cette catégorie n'existe pas!`)}
+          return new ResponseFormat(200,"SUCCESS",{categoryName},`Catégorie supprimée avec succès!`)
+        }catch(error){return new ResponseFormat(500,"FAILURE",{error},"Erreur lors de la suppression de la catégorie!")}
       }
     }
 

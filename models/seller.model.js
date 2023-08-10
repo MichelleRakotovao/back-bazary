@@ -1,20 +1,42 @@
 import { model, Schema } from "mongoose"
 
 const SellerSchema = new Schema({
-    user: {
-        type: Schema.Types.ObjectId,
-        ref: 'Users',
+    fullname: {
+        type: String,
+    },
+
+    password: {
+        type: String,
     },
     CINUrl: {
         type: String,
-        require: true
+        default: 'https://picsum.photos/200/300'
     },
-    items: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Items',
-    }]
+    authenticationType: {
+        type: {
+            providerName: String,
+            uuid: String
+        }
+    },
+    phoneNumber: {
+        type: String,
+        require: false,
+        unique: true
+    },
+    phoneCode: {
+        type: String,
+        require: false
+    },
+    isPhoneVerified: {
+        type: Boolean,
+        require: false
+    },
+    items:{
+        type:Schema.Types.ObjectId,
+        ref:'Items'
+    }
 
 })
 
-const SellerModel = new model('Sellers', SellerSchema)
+const SellerModel = new model('Sellers',SellerSchema)
 export default SellerModel

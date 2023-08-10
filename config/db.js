@@ -10,5 +10,5 @@ let connectionUrl = process.env.MONGO_URL || 'mongodb://127.0.0.1:27017/bazary';
         },
     )
         .then(() => console.log('Database connected'))
-        .catch(() => console.log('Database connection error'))
+        .catch((err) => console.log('Database connection error'+err))
 })()
