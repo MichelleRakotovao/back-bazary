@@ -46,11 +46,11 @@ export default class CategoryController{
         }
       }
     async deleteCategory(req,res){
-      const name=req.query
+      const {name}=req.query
       if(name){
         try{        
           const data=await categoryService.deleteCategory(name)
-          if (data){res.status(200).status(new ResponseFormat(200,"SUCCESS",{name},`Catégorie supprimée`))}
+          if (data){res.status(200).send(new ResponseFormat(200,"SUCCESS",{name},`Catégorie supprimée`))}
           else{return new ResponseFormat(404,"FAILURE",{},"Catégorie non trouvée!")}
         }catch(error){
         res.status(500).send(new ResponseFormat(500,"FAILURE",{error},`Erreur du serveur!`))}
