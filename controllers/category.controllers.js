@@ -1,4 +1,3 @@
-import categoryModel from "../models/category.model.js"
 import CategoryService from "../services/category.service.js"
 import ResponseFormat from "../utils/response.js"
 const categoryService=new CategoryService()
@@ -22,7 +21,8 @@ export default class CategoryController{
         } catch (error){ res.status(500).json({error:error.message})}
     }
     async getOneCategory(req,res){
-    const{name}=req.query
+    let{name}=req.query
+    name=name.toLowerCase()
     if (name){
         try {
             const data=await categoryService.getOneCategory((name.toLowerCase()))
@@ -31,8 +31,10 @@ export default class CategoryController{
     } 
     }
     async editCategory(req, res) {
-        const { name } = req.query
-        const { newName } = req.body
+        let { name } = req.query
+        let { newName } = req.body
+        name=name.toLowerCase()
+        newName=newName.toLowerCase()
     
         if (name && newName) {
           try {
@@ -46,7 +48,8 @@ export default class CategoryController{
         }
       }
     async deleteCategory(req,res){
-      const {name}=req.query
+      let {name}=req.query
+      name=name.toLowerCase()
       if(name){
         try{        
           const data=await categoryService.deleteCategory(name)
