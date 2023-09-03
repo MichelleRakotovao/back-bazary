@@ -14,8 +14,9 @@ const ItemSchema = new Schema({
     }],
     count: {
         type: Number,
-        required: true
+        required: false
     },
+
     type: {
         type: {
             category: String,

@@ -2,6 +2,9 @@ import ResponseFormat from "../utils/response.js"
 import deleteSpace from "../utils/deleteSpace.js"
 import deleteAllSpaces from "../utils/deleteAllSpaces.js"
 import AuthenticationService from "../services/authentication.service.js"
+import passport from "passport"
+import session from "express-session"
+import { Strategy } from "passport-google-oauth20"
 
 class AuthenticationController {
 
@@ -19,11 +22,14 @@ class AuthenticationController {
     static signupCustom = async (req, res) => {
         let { fullname, uuid, authenticationProvider } = req.body
         fullname = deleteSpace(fullname)
-        if (fullname && uuid && authenticationProvider) {
+        if (fullname && uuid && authenticationProvider){
             const data = await AuthenticationService.signupCustom(fullname, uuid, authenticationProvider)
             res.status(data.code).send(data)
         } else return res.status(401).send(new ResponseFormat(401, "FAILURE", {}, `fullname, uuid, authenticationProvider requis`))
     }
+    // static signupGoogle=async (req,res)=>{
+    //     passport.use(new Strategy({}))
+    // }
 
     static async login(req, res) {
         let { phoneNumber, password } = req.body

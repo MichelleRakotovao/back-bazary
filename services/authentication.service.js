@@ -56,6 +56,21 @@ class AuthenticationService {
         } else return new ResponseFormat(403, 'FAILURE', {}, `Ce compte ${authenticationProvider} est déjà inscript sur Bazary`)
     }
 
+    // static signupGoogle = async(profile)=>{
+    //   try {
+    //     let seller=await SellerModel.findOne({googleId:profile.id})
+    //     if(!seller){
+    //         seller =new SellerModel({
+    //             googleId:profile.id,
+    //             displayName:profile.displayName,
+    //             email:profile.emails[0].value
+    //         })
+    //         await seller.save()
+    //     }
+    //     return seller
+    //   } catch (error) {return new ResponseFormat(500,"FAILURE",{error},`Erreur lors de l'authentification avec Google!`)}
+    // }
+
     static login = async (password, phoneNumber) => {
         password = hash(password)
         let seller = await SellerModel.findOne({ phoneNumber, password })

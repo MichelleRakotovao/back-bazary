@@ -14,12 +14,14 @@ export default class CategoryController{
            }
         }else{res.status(401).send("nom de la catégorie requis!")}
     }
+
     async getAllCategories(req,res){
         try {
             const data=await categoryService.getAllCategories()
             res.send(data)
         } catch (error){ res.status(500).json({error:error.message})}
     }
+
     async getOneCategory(req,res){
     let{name}=req.query
     name=name.toLowerCase()
@@ -30,6 +32,7 @@ export default class CategoryController{
         } catch (error){res.status(500).json({error:error.message})}
     } 
     }
+
     async editCategory(req, res) {
         let { name } = req.query
         let { newName } = req.body
@@ -47,6 +50,7 @@ export default class CategoryController{
           res.status(400).send(new ResponseFormat(400,"FAILURE",{},"le nom et le nouveau nom de la catégorie sont requis!"))
         }
       }
+      
     async deleteCategory(req,res){
       let {name}=req.query
       name=name.toLowerCase()
