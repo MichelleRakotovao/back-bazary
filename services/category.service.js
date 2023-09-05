@@ -10,7 +10,7 @@ class CategoryService {
     } else { return new ResponseFormat(401, "FAILURE", {}, "Cette catégorie existe déja!") }
   }
   async getAllCategories() {
-    let allCategories = await CategoryModel.find()
+    let allCategories = await CategoryModel.find() 
     console.log(allCategories)
     return allCategories
   }
@@ -43,5 +43,4 @@ class CategoryService {
     } catch (error) { return new ResponseFormat(500, "FAILURE", { error }, "Erreur lors de la suppression de la catégorie!") }
   }
 }
-
 export default CategoryService
