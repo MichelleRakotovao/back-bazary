@@ -1,5 +1,5 @@
-export default (fullname) => {
-    fullname = fullname.trim()
-    fullname = fullname.replace(/\s+/g, " ")
+export default (data) => {
+    data = data.trim()
+    data = data.replace(/\s+/g, " ")
     return fullname
 }
