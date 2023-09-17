@@ -70,7 +70,7 @@ export default class ItemController {
         let { itemID } = req.body
         const { authorization } = req.headers
         if (itemID) {
-            
+
             const data = await ItemService.edit(itemProperty, itemID)
             res.status(data.code).send(data)
         } else res.status(401).send(new ResponseFormat(401, 'FAILURE', {}, 'Veuillez verifier le champs "itemID" '))
