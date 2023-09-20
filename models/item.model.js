@@ -1,5 +1,4 @@
 import { Schema, model } from "mongoose"
-
 const ItemSchema = new Schema({
     name: {
         type: String,
@@ -12,7 +11,7 @@ const ItemSchema = new Schema({
     picturesUrls: [{
         type: String
     }],
-    count: {
+    quantity: {
         type: Number,
         required: false
     },
@@ -24,7 +23,10 @@ const ItemSchema = new Schema({
         }
     },
     size: Number,
-    color: String,
+    color: [{
+        type: String
+    }
+    ],
     orders: [{
         type: Schema.Types.ObjectId,
         ref: 'Orders',
