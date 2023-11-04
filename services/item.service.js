@@ -4,7 +4,8 @@ import ResponseFormat from "../utils/response.js"
 
 import decodeToken from "../utils/decodeToken.js"
 export default class ItemService {
-    static add = async (itemProperty) => {
+    static add = async (itemProperty, sellerID) => {
+        console.log(sellerID);
         const seller = await SellerModel.findById(sellerID)
         if (seller) {
             const newItem = new ItemModel(itemProperty)
